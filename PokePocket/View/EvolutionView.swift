@@ -25,14 +25,14 @@ struct EvolutionView: View {
                         VStack {
                             Image("\(pokemon.species.url.speciesURL(url: pokemon.species.url))")
                                 .frame(width: 75, height: 75)
-                            Text(pokemon.species.name.fixSuffix(network.evolution.chain.species.name).capitalizingFirstLetter())
+                            Text(pokemon.species.name.fixSuffix(pokemon.species.name).capitalizingFirstLetter())
                         }
                         ForEach(pokemon.evolvesTo, id: \.self) { evolution in
                             Image(systemName: "arrow.down")
                             VStack {
                                 Image("\(evolution.species.url.speciesURL(url: evolution.species.url))")
                                     .frame(width: 75, height: 75)
-                                Text(evolution.species.name.fixSuffix(network.evolution.chain.species.name).capitalizingFirstLetter())
+                                Text(evolution.species.name.fixSuffix(evolution.species.name).capitalizingFirstLetter())
                             }
                         }
                     }
@@ -48,7 +48,7 @@ struct EvolutionView: View {
         }
         
         .onAppear {
-            network.fetchEvolution(url: network.speciesDetail)
+            network.fetchEvolution(url: speciesDetail)
         }
         .padding(.top)
     }

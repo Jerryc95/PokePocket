@@ -22,7 +22,7 @@ struct DescriptionView: View {
     var EntryText: String {
         let entries = network.speciesDetail.flavorTextEntries
         if entries.isEmpty == false {
-            let description = entries[4]
+            let description = entries[1]
             let flavorText = description.flavorText
         return flavorText
         }

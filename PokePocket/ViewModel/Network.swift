@@ -120,6 +120,7 @@ class Network: ObservableObject {
                     }
                     await self.fetchSpecies(species: self.details.species)
                     await self.fetchLocations(details: self.details)
+                 //   await self.fetchEvolutionChain(species: self.details.species)
                 }
             } catch {
                 print(error.localizedDescription)
@@ -155,32 +156,32 @@ class Network: ObservableObject {
     }
     
 
-//    func fetchEvolutionChain(species: Species) async {
-//        guard let url = URL(string: species.url) else { fatalError("Missing URL") }
-//        let urlRequest = URLRequest(url: url)
-//        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-//            if let error = error {
-//                print("request error:", error)
-//                return
-//            }
-//            guard let response = response as? HTTPURLResponse else { return }
-//
-//            if response.statusCode == 200 {
-//                guard let data = data else { return }
-//                DispatchQueue.main.async {
-//                    do {
-//                        let decoder = JSONDecoder()
-//                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                        let decodedEvolution = try decoder.decode(Evolution.self, from: data)
-//                        self.evolution = decodedEvolution
-//                    } catch let error {
-//                        print("error decoding:", error)
-//                    }
-//                }
-//            }
-//        }
-//         dataTask.resume()
-//    }
+    func fetchEvolutionChain(species: Species) async {
+        guard let url = URL(string: species.url) else { fatalError("Missing URL") }
+        let urlRequest = URLRequest(url: url)
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+            if let error = error {
+                print("request error:", error)
+                return
+            }
+            guard let response = response as? HTTPURLResponse else { return }
+
+            if response.statusCode == 200 {
+                guard let data = data else { return }
+                DispatchQueue.main.async {
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let decodedEvolution = try decoder.decode(Evolution.self, from: data)
+                        self.evolution = decodedEvolution
+                    } catch let error {
+                        print("error decoding:", error)
+                    }
+                }
+            }
+        }
+         dataTask.resume()
+    }
     
     func fetchLocations(details: Details) async {
         guard let url = URL(string: details.locationAreaEncounters) else { fatalError("Missing URL") }
@@ -215,6 +216,7 @@ class Network: ObservableObject {
             await fetchDetails(result: result)
             await fetchLocations(details: self.details)
             await fetchSpecies(species: self.details.species)
+          //  await fetchEvolutionChain(species: self.details.species)
         }
     }
 }

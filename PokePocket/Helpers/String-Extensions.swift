@@ -107,11 +107,11 @@ extension String {
     }
     
     func removeN(_ text: String) -> String {
-        if text.contains("\n ") {
-            let newText = text.replacingOccurrences(of: "\n ", with: " ")
-            return newText
-        } else if text.contains("\n") {
+        if text.contains("\n") {
             let newText = text.replacingOccurrences(of: "\n", with: "")
+            return newText
+        } else if text.contains("\n ") {
+            let newText = text.replacingOccurrences(of: "\n ", with: " ")
             return newText
         } else if text.contains(" \n") {
             let newText = text.replacingOccurrences(of: " \n", with: " ")
