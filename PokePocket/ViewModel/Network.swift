@@ -50,33 +50,33 @@ class Network: ObservableObject {
          dataTask.resume()
     }
     
-    func fetchQuizDetails(url: Result) {
-        guard let url = URL(string: url.url) else { fatalError("Missing URL") }
-        let urlRequest = URLRequest(url: url)
-        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let error = error {
-                print("request error:", error)
-                return
-            }
-            guard let response = response as? HTTPURLResponse else { return }
-
-            if response.statusCode == 200 {
-                guard let data = data else { return }
-                DispatchQueue.main.async {
-                    do {
-                        print("quiz details pulled")
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let decodedDetails = try decoder.decode(Details.self, from: data)
-                        self.details = decodedDetails
-                    } catch let error {
-                        print("error decoding:", error)
-                    }
-                }
-            }
-        }
-         dataTask.resume()
-    }
+//    func fetchQuizDetails(url: Result) {
+//        guard let url = URL(string: url.url) else { fatalError("Missing URL") }
+//        let urlRequest = URLRequest(url: url)
+//        let dataTask = URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
+//            if let error = error {
+//                print("request error:", error)
+//                return
+//            }
+//            guard let response = response as? HTTPURLResponse else { return }
+//
+//            if response.statusCode == 200 {
+//                guard let data = data else { return }
+//                DispatchQueue.main.async {
+//                    do {
+//                        print("quiz details pulled")
+//                        let decoder = JSONDecoder()
+//                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        let decodedDetails = try decoder.decode(Details.self, from: data)
+//                        self.details = decodedDetails
+//                    } catch let error {
+//                        print("error decoding:", error)
+//                    }
+//                }
+//            }
+//        }
+//         dataTask.resume()
+//    }
     
     func fetchEvolution(url: SpeciesDetail)  {
         guard let url = URL(string: url.evolutionChain.url) else { fatalError("Missing URL") }
@@ -120,7 +120,6 @@ class Network: ObservableObject {
                     }
                     await self.fetchSpecies(species: self.details.species)
                     await self.fetchLocations(details: self.details)
-                 //   await self.fetchEvolutionChain(species: self.details.species)
                 }
             } catch {
                 print(error.localizedDescription)
